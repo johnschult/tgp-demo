@@ -1,0 +1,20 @@
+version: '3.7'
+services:
+  postgres-tgpdemo:
+      image: postgres:latest
+      restart: always
+      environment:
+        - POSTGRES_USER=${DB_USER}
+        - POSTGRES_PASSWORD=${DB_PASSWORD}
+      logging:
+        options:
+          max-size: 10m
+          max-file: "3"
+      ports:
+        - '5433:5432'
+      volumes: 
+        - postgres-data:/var/lib/postgresql/data
+        # copy the sql script to create databse
+        - ./create-database.sql:/docker-entrypoint-initdb.d/create-database.sql
+volumes:
+  postgres-data:
